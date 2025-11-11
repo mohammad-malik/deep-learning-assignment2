@@ -22,7 +22,7 @@ Legal clauses are highly structured and may express the same legal principle in 
 Applications: contract analysis, de-duplication, legal retrieval, compliance checks.
 
 ## Dataset notes
-
+- [Dataset downloaded from Kaggle](https://www.kaggle.com/datasets/bahushruth/legalclausedataset?select=acceleration.csv)
 - Each CSV file in `nlp_dataset/` groups clauses for a single category.
 - The notebook reads clause text (column `clause_text`) and uses an in-file `clause_type` column when present.
 - Clauses are split at the clause level (train/val/test) per category to avoid leakage; then positive (same category) and negative (different category) pairs are sampled within each split.
@@ -130,6 +130,19 @@ If you want a non-interactive run, you can execute the notebook with `papermill`
 - The Attentive BiGRU tends to lead in F1/PR-AUC because attention helps focus on operative verbs and exceptions in longer clauses.
 - BiLSTM can be faster to train and competitive on near-template boilerplate text.
 - TF-IDF is a strong lexical baseline for near-duplicates but fails on paraphrase-level semantic similarity.
+
+### Results
+
+| Model        |      Acc |     Prec |      Rec |       F1 |  ROC-AUC |   PR-AUC |      Thr | Train Time (s) |     Loss |
+| ------------ | -------: | -------: | -------: | -------: | -------: | -------: | -------: | -------------: | -------: |
+| BiLSTM       | 0.868614 | 0.857923 | 0.883550 | 0.870548 | 0.946642 | 0.949848 | 0.681313 |    9490.024658 | 0.392995 |
+| AttentiveGRU | 0.895993 | 0.902432 | 0.887992 | 0.895154 | 0.961654 | 0.964579 | 0.645903 |   17230.376958 | 0.299011 |
+| TFIDF        | 0.507411 | 0.503776 | 0.988668 | 0.667452 | 0.586827 | 0.573302 | 0.217144 |      38.753078 |        — |
+
+
+<img width="1189" height="390" alt="output" src="https://github.com/user-attachments/assets/5fa04bca-bf2c-49eb-ba51-44aa2501aff0" />
+<img width="410" height="330" alt="output2" src="https://github.com/user-attachments/assets/a811e668-5083-4435-9cb9-88184e33bd79" /><img width="410" height="330" alt="output3" src="https://github.com/user-attachments/assets/52955bc4-2d20-414e-bd61-a1954b74189a" />
+
 
 ## Extending this work
 
